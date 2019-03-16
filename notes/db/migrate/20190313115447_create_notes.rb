@@ -8,6 +8,6 @@ class CreateNotes < ActiveRecord::Migration[5.2]
       
       t.timestamps
     end
-      add_attachment :notes,:image
+      add_attachment :notes,:cover
   end
 end

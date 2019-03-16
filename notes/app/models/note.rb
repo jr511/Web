@@ -1,5 +1,6 @@
 class Note < ApplicationRecord
   belongs_to :user
   
-  has_attached_file :cover, styles: { medium: "1280x720", thumb:"800x600"}
+  has_attached_file :cover
+  validates_attachment_content_type :cover, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 end
