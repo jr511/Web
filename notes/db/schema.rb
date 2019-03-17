@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2019_03_16_112518) do
   create_table "notes", force: :cascade do |t|
     t.string "title"
     t.string "content"
-    t.string "image"
+    t.decimal "image"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2019_03_16_112518) do
     t.string "cover_content_type"
     t.bigint "cover_file_size"
     t.datetime "cover_updated_at"
+    t.boolean "cover", null: false
     t.index ["user_id"], name: "index_notes_on_user_id"
   end
 
