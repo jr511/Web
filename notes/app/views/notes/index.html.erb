@@ -144,6 +144,7 @@
                 <div class="btn-group">
                   <a type="button" href="<%= root_url %>notes/<%= note.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
                   <a type="button" href="<%= root_url %>notes/<%= note.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
+                  <a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></a>
 
 		  <div>
                   <svg id="img<%= note.id %>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
