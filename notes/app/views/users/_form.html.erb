@@ -1,27 +1,67 @@
-<%= form_with(model: user, local: true) do |form| %>
-  <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>Registration Template · Bootstrap</title>
 
-      <ul>
-      <% user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+  <style>
+  .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }
+</style>
+<!-- Custom styles for this template -->
+<link href="https://getbootstrap.com/docs/4.3/examples/sign-in/signin.css" rel="stylesheet">
+</head>
+<body class="text-center">
+  <div class="form-signin">
+    <%= form_with(model: user, local: true) do |form| %>
+    <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Register</h1>
+    <label for="inputUsername" class="sr-only">Username</label>
+    <input type="text" id="username" class="form-control" placeholder="Username" required autofocus <%= form.text_field :name %>
+    <label for="inputPassword" class="sr-only">Password</label>
+    <input type="password" id="inputPassword" class="form-control  mb-0" placeholder="Password" required <%= form.text_field :password %>
+    <label for="repeatPassword" class="sr-only">Repeat password</label>
+    <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required>
+    <div class="space mb-3">
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <a href="/" class="btn btn-secondary btn-block" role="button" style="color:white">Back</a>
+        </div>
+        <div class="col-sm">
+          <button type="submit" class="btn btn-primary btn-block" onclick=<%= form.submit %>Create</button>
+        </div>
+      </div>
+    </div>
+    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+    <% end %>
   </div>
+</body>
+</html>
 
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.text_field :password %>
-  </div>
 
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
+
+
