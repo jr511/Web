@@ -14,7 +14,7 @@ Logged in as <%= session[:user] %>.
 <%= link_to "Log out", logout_path %>
 <% else %>
 <%= link_to "Sign up", signup_path %> or
-<%= link_to "log in", login_path %>.
+<%= link_to "Sign in", login_path %>.
 <% end %>
 </div>
 <% flash.each do |name, msg| %>
