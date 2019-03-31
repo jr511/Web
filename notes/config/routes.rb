@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'users/index'
 
   get "logout" => "session#destroy", :as => "logout"
-  get "login" => "session#new", :as => "login"
+  get "login" => "session#index", :as => "login"
   post "login" => "session#create"
   get "signup" => "users#new", :as => "signup"
 

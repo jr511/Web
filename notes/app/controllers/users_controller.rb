@@ -44,12 +44,16 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-    if @user.save
-      session[:user] = @user.name
-      redirect_to root_url + 'notes', :notice => "Signed up!"
+    if check_params[:password] != check_params[:confirm_password]
+       redirect_to signup_path, :alert => "Passwords don't match!"
     else
-      render :new
+       @user = User.new(user_params)
+       if @user.save
+          session[:user] = @user.name
+          redirect_to root_url + 'notes', :notice => "Signed up!"
+       else
+          render :new
+       end
     end
   end
 
@@ -64,16 +68,23 @@ class UsersController < ApplicationController
           redirect_to notes_path, :alert => "You cannot edit another user!"
        else
           respond_to do |format|
-          if @user.update(user_params)
-             format.html { redirect_to @user, notice: 'User was successfully updated.' }
-             format.json { render :show, status: :ok, location: @user }
-          else
+          
+          if check_params[:password] != check_params[:confirm_password]
              format.html { render :edit }
-             format.json { render json: @user.errors, status: :unprocessable_entity }
+             format.json { render json: @user.errors, status: :unprocessable_entity}
+          else
+             if @user.update(user_params)
+                session[:user] = user_params[:name]
+                format.html { redirect_to @user, notice: 'User was successfully updated.' }
+                format.json { render :show, status: :ok, location: @user }
+             else
+                format.html { render :edit }
+                format.json { render json: @user.errors, status: :unprocessable_entity }
+             end
           end
           end
        end
-    end
+     end
    end
 
   # DELETE /users/1
@@ -104,5 +115,9 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :password)
+    end
+
+    def check_params
+      params.require(:user).permit(:name, :password, :confirm_password)
     end
 end

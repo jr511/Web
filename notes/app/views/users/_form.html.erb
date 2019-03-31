@@ -43,7 +43,7 @@
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" id="inputPassword" class="form-control  mb-0" placeholder="Password" required <%= form.text_field :password %>
     <label for="repeatPassword" class="sr-only">Repeat password</label>
-    <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required>
+    <input type="password" id="repeatPassword" class="form-control" placeholder="Repeat password" required <%= form.text_field :confirm_password %>
     <div class="space mb-3">
     </div>
     <div class="container">
