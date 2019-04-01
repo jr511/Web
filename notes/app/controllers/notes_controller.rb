@@ -15,6 +15,9 @@ class NotesController < ApplicationController
        redirect_to root_path, :alert => "You have to log in to view a note "
     else
        @note = Note.find(params[:id])
+       if @note.user.name != session[:user]
+          redirect_to notes_path, :alert => "You cannot view another user’s note!"
+       end
     end
   end
 
@@ -35,8 +38,6 @@ class NotesController < ApplicationController
        @note = Note.find(params[:id]) 
        if @note.user.name != session[:user]
           redirect_to notes_path, :alert => "You cannot edit another user’s note!"
-       else
-          @note = Note.find(params[:id])
        end
     end
   end

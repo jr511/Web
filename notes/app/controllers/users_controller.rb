@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    if session[:user]
+       redirect_to notes_path
+    end
   end
 
   # GET /users/1
@@ -16,14 +18,15 @@ class UsersController < ApplicationController
        @users = User.find(params[:id]) 
        if @users.name != session[:user]
           redirect_to notes_path, :alert => "You cannot view another user!"
-       else
-          @users = User.find(params[:id])
        end
     end
   end
 
   # GET /users/new
   def new
+    if session[:user]
+       redirect_to notes_path
+    end
     @user = User.new
   end
 
@@ -35,8 +38,6 @@ class UsersController < ApplicationController
        @users = User.find(params[:id]) 
        if @users.name != session[:user]
           redirect_to notes_path, :alert => "You cannot edit another user!"
-       else
-          @users = User.find(params[:id])
        end
     end
   end
@@ -68,11 +69,10 @@ class UsersController < ApplicationController
           redirect_to notes_path, :alert => "You cannot edit another user!"
        else
           respond_to do |format|
-          
           if check_params[:password] != check_params[:confirm_password]
-             format.html { render :edit }
+             format.html { redirect_to @user, notice: "Passwords don't match" }
              format.json { render json: @user.errors, status: :unprocessable_entity}
-          else
+	  else
              if @user.update(user_params)
                 session[:user] = user_params[:name]
                 format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -81,8 +81,8 @@ class UsersController < ApplicationController
                 format.html { render :edit }
                 format.json { render json: @user.errors, status: :unprocessable_entity }
              end
-          end
-          end
+             end
+	  end
        end
      end
    end
