@@ -99,6 +99,7 @@ class UsersController < ApplicationController
        else
           @user.destroy
           respond_to do |format|
+	  session[:user] = nil
           format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
           format.json { head :no_content }
           end
