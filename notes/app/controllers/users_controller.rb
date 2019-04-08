@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if session[:user]
-       redirect_to notes_path
+		@users = User.all
+      # redirect_to notes_path
     end
   end
 

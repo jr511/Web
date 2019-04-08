@@ -46,9 +46,12 @@
         <% if user.name == session[:user] %>
 		<a class="text-white"<%= link_to "Profile", "users/" + user.id.to_s %></a>
 		<a class="text-white"<%= link_to "Edit profile", "users/" + user.id.to_s + "/edit" %></a>
+		<% if user.admin == true %>
+			<a class="text-white"<%= link_to "Admin users", "users/" %></a>
+		<% end %>
         <% end %>
         <% end %>
-
+		
           <h4 class="text-white">Contact</h4>
           <ul class="list-unstyled">
           </ul>
