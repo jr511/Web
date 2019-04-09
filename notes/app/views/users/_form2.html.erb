@@ -25,6 +25,11 @@
     <%= form.label :repeat_new_password %>
     <%= form.text_field :confirm_password %>
   </div>
+
+  <div class="field">
+	<%= form.label :set_admin %>
+	<%= form.check_box :admin, {}, true, false %>
+  </div>
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -37,7 +37,7 @@ class UsersController < ApplicationController
        redirect_to root_path, :alert => "You have to log in to edit an user"
     else
        @users = User.find(params[:id]) 
-       if @users.name != session[:user]
+       if @users.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot edit another user!"
        end
     end
@@ -66,7 +66,7 @@ class UsersController < ApplicationController
        redirect_to root_path, :alert => "You have to log in to edit an user"
     else
        @users = User.find(params[:id]) 
-       if @users.name != session[:user]
+       if @users.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot edit another user!"
        else
           respond_to do |format|
@@ -116,10 +116,10 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :password)
+      params.require(:user).permit(:name, :password, :confirm_admin)
     end
 
     def check_params
-      params.require(:user).permit(:name, :password, :confirm_password)
+      params.require(:user).permit(:name, :password, :confirm_password, :confirm_admin)
     end
 end
