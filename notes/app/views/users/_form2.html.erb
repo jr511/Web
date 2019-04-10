@@ -25,11 +25,12 @@
     <%= form.label :repeat_new_password %>
     <%= form.text_field :confirm_password %>
   </div>
-
+  <% if session[:admin] %>
   <div class="field">
 	<%= form.label :set_admin %>
 	<%= form.check_box :admin, {}, 1, 0 %>
   </div>
+  <%end%>
   <div class="actions">
     <%= form.submit %>
   </div>
