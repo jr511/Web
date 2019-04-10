@@ -26,11 +26,12 @@
     <%= form.file_field :cover %>
   </div>
 
-  <!--- <div class="field">
+ <% if session[:admin] %>
+  <div class="field">
     <%= form.label :user_id %>
     <%= form.text_field :user_id %>
-  </div> -->
-
+  </div>
+<%end%>
   <div class="actions">
     <%= form.submit %>
   </div>

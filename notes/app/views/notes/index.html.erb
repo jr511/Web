@@ -34,32 +34,7 @@
     <link href="https://getbootstrap.com/docs/4.3/examples/album/album.css" rel="stylesheet">
   </head>
   <body>
-  	<% @users.each do |user| %>
-  		<% if user.name == session[:user] %>
-  			<% if user.admin == true %>
-  				<p> Hola admin! </p>
-  				<table>
-  					<thead>
-  						<tr>
-  							<th> Titulo </th>
-  							<th> Contenido </th>
-  							<th> Propietario </th>
-  							<th colspan="3"></th>
-  						</tr>
-  					</thead>
-  					<tbody>
-  						<% @notes.each do |note| %>
-  							<tr>
-  								<td><%=note.title%></td>
-  								<td><%=note.content%></td>
-  								<td><%=note.user.name%></td>
-  								<td><%= link_to "Show", note %></td>
-  								
-  							</tr>
-  							<%end%>
-  			<% end %>
-  			<%end%>
-  			<%end%>
+  	
     <header>
   <div class="collapse bg-dark" id="navbarHeader">
     <div class="container">
@@ -221,6 +196,37 @@
   <div class="form-signin">
     <p class="float-right">
       <a href="#">Back to top</a>
+      <% @users.each do |user| %>
+  		<% if user.name == session[:user] %>
+  			<% if user.admin == true %>
+  				<p> Hola admin! </p>
+  				<h1 class="text-dark"><strong> Notes administration panel </strong></h1>
+  				<table class="table text-center">
+  					<thead>
+  						<tr>
+  							<th> ID Nota </th>
+  							<th> Titulo </th>
+  							<th> Contenido </th>
+  							<th> Propietario </th>
+  							<th> ID Propietario </th>
+  							<th colspan="3"></th>
+  						</tr>
+  					</thead>
+  					<tbody>
+  						<% @notes.each do |note| %>
+  							<tr>
+  								<td><%=note.id%></td>
+  								<td><%=note.title%></td>
+  								<td><%=note.content%></td>
+  								<td><%=note.user.name%></td>
+  								<td><%=note.user.id%></td>
+  								<td><%= link_to "Show", note %></td>
+  								
+  							</tr>
+  							<%end%>
+  			<% end %>
+  			<%end%>
+  			<%end%>
     </p>
   </div>
 </footer>
