@@ -1,0 +1,42 @@
+<h1>Pending requests!</h1>
+
+  <tbody>
+    <% @friend_request.each do |request| %>
+      <% if request.user_id == session[:id] %>
+	 <% @users.each do |user| %>
+         <% if user.id == request.friend_id %>
+
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= link_to 'Cancel Request', request, method: :delete %></td>
+      </tr>
+
+	 <% end %>
+	 <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+
+<h1>Your requests!</h1>
+
+  <tbody>
+    <% @friend_request.each do |request| %>
+      <% if request.friend_id == session[:id] %>
+	 <% @users.each do |user| %>
+         <% if user.id == request.user_id %>
+
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= link_to 'Accept', friends_create_path(:id=>request.id, :user=>session[:id], :friend=>user.id), method: :post %></td>
+        <td><%= link_to 'Refuse', request, method: :delete %></td>
+      </tr>
+
+	 <% end %>
+	 <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+

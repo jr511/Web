@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'friends/index'
+  get 'friends/destroy'
+  resources :friend_requests
   get 'session/new'
   get 'session/create'
   get 'session/destroy'
@@ -9,6 +12,8 @@ Rails.application.routes.draw do
   get "login" => "session#index", :as => "login"
   post "login" => "session#create"
   get "signup" => "users#new", :as => "signup"
+  post "friend_requests" => "friend_requests#create"
+  post "friends/create" => "friends#create"
 
   resources :notes
   resources :users

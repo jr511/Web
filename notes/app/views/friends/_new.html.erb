@@ -1,0 +1,46 @@
+<h1>Your friends!</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @friends.each do |friend| %>
+      <% if session[:id] == friend.user_id %>
+	 <% @users.each do |user| %>
+         <% if user.id == friend.friend_id %>
+
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= link_to 'Delete Friend', friends_destroy_path(:friend=>friend.id) %></td>
+      </tr>
+
+	 <% end %>
+         <% end %>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+
+<h1> Make new friends! </h1>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <% if user.name != session[:user] %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= link_to 'Add Friend', friend_requests_path(:user=>session[:id], :friend=>user.id), method: :post %></td>
+      </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>
+

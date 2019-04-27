@@ -47,6 +47,8 @@
         <% if user.name == session[:user] %>
 		<a class="text-white"<%= link_to "Profile", "users/" + user.id.to_s %></a>
 		<a class="text-white"<%= link_to "Edit profile", "users/" + user.id.to_s + "/edit" %></a>
+		<a class="text-white" <%= link_to "Friends", "friends/index" %></a>
+		
 		<% if user.admin == true %>
 			<a class="text-white"<%= link_to "Admin users", "users/" %></a>
 		<% end %>
@@ -199,7 +201,7 @@
       <% @users.each do |user| %>
   		<% if user.name == session[:user] %>
   			<% if user.admin == true %>
-  				<p> Hola admin! </p>
+  				<p> Hello admin! </p>
   				<h1 class="text-dark"><strong> Notes administration panel </strong></h1>
   				<table class="table text-center">
   					<thead>

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if session[:user]
-		@users = User.all
+      @users = User.all
       # redirect_to notes_path
     end
   end
@@ -50,11 +50,13 @@ class UsersController < ApplicationController
        redirect_to signup_path, :alert => "Passwords don't match!"
     else
        @user = User.new(user_params)
-       if @user.save
+       begin 
+	  @user.save
+          session[:id] = @user.id
           session[:user] = @user.name
           redirect_to root_url + 'notes', :notice => "Signed up!"
-       else
-          render :new
+       rescue
+          redirect_to signup_path, :alert => "User name already in use"
        end
     end
   end
@@ -74,12 +76,13 @@ class UsersController < ApplicationController
              format.html { redirect_to @user, notice: "Passwords don't match" }
              format.json { render json: @user.errors, status: :unprocessable_entity}
 	  else
-             if @user.update(user_params)
+	     begin
+                @user.update(user_params)
                 session[:user] = user_params[:name]
                 format.html { redirect_to @user, notice: 'User was successfully updated.' }
                 format.json { render :show, status: :ok, location: @user }
-             else
-                format.html { render :edit }
+             rescue
+                format.html { redirect_to signup_path, :alert => "User name already in use" }
                 format.json { render json: @user.errors, status: :unprocessable_entity }
              end
              end
@@ -100,8 +103,9 @@ class UsersController < ApplicationController
        else
           @user.destroy
           respond_to do |format|
+ 	  session[:id] = nil
 	  session[:user] = nil
-          format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+          format.html { redirect_to root_url, notice: 'User was successfully destroyed.' }
           format.json { head :no_content }
           end
        end

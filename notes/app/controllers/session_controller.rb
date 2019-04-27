@@ -11,6 +11,7 @@ class SessionController < ApplicationController
 	 flash.now.alert = "username #{params[:name]} was invalid"
 	 render :index
       elsif @user.password == params[:password]
+	 session[:id] = @user.id
 	 session[:user] = @user.name
 	 session[:admin] = @user.admin
 	 redirect_to root_url + 'notes', :notice => "Logged in!" 
@@ -21,7 +22,9 @@ class SessionController < ApplicationController
   end
 
   def destroy
+      session[:id] = nil
       session[:user] = nil
+      session[:admin] = nil 
       redirect_to :root, :notice => "Logged out!"
   end
 end
