@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    if !session[:user]
+       redirect_to login_path, :alert => "You have to log in to view users"
+    end
     if session[:user]
       @users = User.all
       # redirect_to notes_path
@@ -14,10 +17,10 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to view an user "
+       redirect_to login_path, :alert => "You have to log in to view an user "
     else
-       @users = User.find(params[:id]) 
-       if @users.name != session[:user]
+       @user = User.find(params[:id]) 
+       if @user.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot view another user!"
        end
     end
@@ -34,10 +37,10 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to edit an user"
+       redirect_to login_path, :alert => "You have to log in to edit an user"
     else
-       @users = User.find(params[:id]) 
-       if @users.name != session[:user] and !session[:admin]
+       @user = User.find(params[:id]) 
+       if @user.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot edit another user!"
        end
     end
@@ -54,6 +57,7 @@ class UsersController < ApplicationController
 	  @user.save
           session[:id] = @user.id
           session[:user] = @user.name
+	  session[:admin] = @user.admin
           redirect_to root_url + 'notes', :notice => "Signed up!"
        rescue
           redirect_to signup_path, :alert => "User name already in use"
@@ -65,27 +69,33 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to edit an user"
+       redirect_to login_path, :alert => "You have to log in to edit an user"
     else
-       @users = User.find(params[:id]) 
-       if @users.name != session[:user] and !session[:admin]
+       @user = User.find(params[:id]) 
+       if @user.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot edit another user!"
        else
-          respond_to do |format|
-          if check_params[:password] != check_params[:confirm_password]
-             format.html { redirect_to @user, notice: "Passwords don't match" }
-             format.json { render json: @user.errors, status: :unprocessable_entity}
-	  else
-	     begin
-                @user.update(user_params)
-                session[:user] = user_params[:name]
-                format.html { redirect_to @user, notice: 'User was successfully updated.' }
-                format.json { render :show, status: :ok, location: @user }
-             rescue
-                format.html { redirect_to signup_path, :alert => "User name already in use" }
-                format.json { render json: @user.errors, status: :unprocessable_entity }
-             end
-             end
+	  respond_to do |format|
+	  if check_params[:password] != @user.password
+             if check_params[:password] != check_params[:confirm_password]
+        	format.html { redirect_to @user, notice: "Passwords don't match" }
+	        format.json { render json: @user.errors, status: :unprocessable_entity}
+	     end
+	  end 
+	  begin
+  	     if @user.name == session[:user]
+                @user.update(user_params)        
+	        session[:user] = @user.name
+                session[:admin] = @user.admin
+	     else
+                @user.update(user_params)        
+	     end
+             format.html { redirect_to @user, notice: 'User was successfully updated.' }
+             format.json { render :show, status: :ok, location: @user }
+          rescue
+             format.html { redirect_to @user, :alert => "User name already in use" }
+             format.json { render json: @user.errors, status: :unprocessable_entity }
+          end
 	  end
        end
      end
@@ -95,19 +105,22 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to delete an user"
+       redirect_to login_path, :alert => "You have to log in to delete an user"
     else
-       @users = User.find(params[:id]) 
-       if @users.name != session[:user]
+       @user = User.find(params[:id]) 
+       if @user.name != session[:user] and !session[:admin]
           redirect_to notes_path, :alert => "You cannot delete another user!"
        else
-          @user.destroy
+	  if @user.name == session[:user]
+ 	     session[:id] = nil
+	     session[:user] = nil
+	     session[:admin] = nil         
+	  end
+	  @user.destroy
           respond_to do |format|
- 	  session[:id] = nil
-	  session[:user] = nil
-          format.html { redirect_to root_url, notice: 'User was successfully destroyed.' }
+	  format.html { redirect_to root_url, notice: 'User was successfully destroyed.' }
           format.json { head :no_content }
-          end
+	  end
        end
     end
   end

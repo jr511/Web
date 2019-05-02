@@ -1,6 +1,5 @@
 <h1>Pending requests!</h1>
-
-  <tbody>
+<table>
     <% @friend_request.each do |request| %>
       <% if request.user_id == session[:id] %>
 	 <% @users.each do |user| %>
@@ -15,13 +14,9 @@
 	 <% end %>
       <% end %>
     <% end %>
-  </tbody>
 </table>
-
-
+<table>
 <h1>Your requests!</h1>
-
-  <tbody>
     <% @friend_request.each do |request| %>
       <% if request.friend_id == session[:id] %>
 	 <% @users.each do |user| %>
@@ -37,6 +32,4 @@
 	 <% end %>
       <% end %>
     <% end %>
-  </tbody>
 </table>
-

@@ -26,12 +26,18 @@
     <%= form.file_field :cover %>
   </div>
 
+  <div class="field">
+	<%= form.label :shared %>
+	<%= form.check_box :shared, {}, 1, 0 %>
+  </div>
+
  <% if session[:admin] %>
   <div class="field">
     <%= form.label :user_id %>
     <%= form.text_field :user_id %>
   </div>
 <%end%>
+
   <div class="actions">
     <%= form.submit %>
   </div>

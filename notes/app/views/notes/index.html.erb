@@ -48,8 +48,8 @@
 		<a class="text-white"<%= link_to "Profile", "users/" + user.id.to_s %></a>
 		<a class="text-white"<%= link_to "Edit profile", "users/" + user.id.to_s + "/edit" %></a>
 		<a class="text-white" <%= link_to "Friends", "friends/index" %></a>
-		
-		<% if user.admin == true %>
+
+		<% if user.admin %>
 			<a class="text-white"<%= link_to "Admin users", "users/" %></a>
 		<% end %>
         <% end %>
@@ -137,7 +137,7 @@
   </section>
 
   <div class="album py-5 bg-light">
-
+  <h1 class="text-dark"><strong> Notes </strong></h1>
     <div class="form-signin">
 
       <div class="row">
@@ -190,17 +190,94 @@
 	}
 	</script>
       <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="text-muted">
+  <div class="album py-5 bg-light">
+  <h1 class="text-dark"><strong> Friends Notes </strong></h1>
+    <div class="form-signin">
+      <div class="row">
+      <% @friends.each do |friend| %>
+      <% if session[:id] == friend.user_id %>
+
+	 <% @users.each do |user| %>
+         <% if user.id == friend.friend_id %>
+
+        	<% @notes.each do |note| %>
+	        <% if note.user.name == user.name %>
+		<% if note.shared %>
+
+        <div class="col-md-4">
+          <p class="card-text">
+
+          <div class="card mb-4 shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= note.content %></text></svg>
+            <div class="card-body">
+              
+      <tr>
+        <td></td>
+      </tr>
+    </p>
+              <div class="d-flex justify-content-between align-items-center">
+              	<p class="float-right"><%= note.title %></p>
+                <div class="btn-group">
+                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
+                  <a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></a>
+
+		  <div>
+                  <svg id="img<%= note.id %>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="30" height="30" viewBox="0 0 673.221 673.222" style="enable-background:new 0 0 673.221 673.222;"
+	 xml:space="preserve">
+<g>
+        
+<path d="M470.486,136.597c13.158-13.77-13.158-41.279-26.347-27.509L138.69,428.215c0,0-68.452,71.543-5.263,137.547
+		c63.188,66.035,131.672-5.508,131.672-5.508l321.269-335.621c0,0,84.272-88.036-5.263-181.581
+		c-89.536-93.544-173.809-5.508-173.809-5.508L86.028,373.196c0,0-121.115,126.562-5.264,247.615s236.997-5.508,236.997-5.508
+		l321.27-335.652c13.158-13.739-13.158-41.279-26.347-27.509L291.446,587.764c0,0-94.799,99.052-184.335,5.508
+		c-89.535-93.544,5.264-192.565,5.264-192.565L433.613,65.054c0,0,57.926-60.527,121.146,5.508
+		c63.188,66.035,5.263,126.562,5.263,126.562L238.783,532.745c0,0-42.136,44.033-79.009,5.508s5.263-82.528,5.263-82.528
+		L470.486,136.597z"/>
+</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g><g><g></g><g></g><g></g>
+                  </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+	<script type="text/javascript">
+	if("<%= note.cover_file_name %>" == ""){
+		var currentImg = document.getElementById("img<%= note.id %>");
+		currentImg.style.visibility = 'hidden';
+	}
+	</script>
+      		<% end %>
+		<% end %>
+		<% end %>
+
+        <% end %>
         <% end %>
 
-</main>
+      <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</footer>
 
 <footer class="text-muted">
   <div class="form-signin">
     <p class="float-right">
-      <a href="#">Back to top</a>
+
       <% @users.each do |user| %>
   		<% if user.name == session[:user] %>
-  			<% if user.admin == true %>
+  			<% if user.admin %>
   				<p> Hello admin! </p>
   				<h1 class="text-dark"><strong> Notes administration panel </strong></h1>
   				<table class="table text-center">
@@ -216,6 +293,7 @@
   					</thead>
   					<tbody>
   						<% @notes.each do |note| %>
+				  		<% if note.user.name != session[:user] %>
   							<tr>
   								<td><%=note.id%></td>
   								<td><%=note.title%></td>
@@ -223,15 +301,22 @@
   								<td><%=note.user.name%></td>
   								<td><%=note.user.id%></td>
   								<td><%= link_to "Show", note %></td>
+								<td><%= link_to "Edit", edit_note_path(note) %></td>
+								<td><%= link_to "Destroy", note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   								
   							</tr>
-  							<%end%>
+  						<%end%>
+  						<%end%>
+					</tbody>
+				</table>
   			<% end %>
-  			<%end%>
-  			<%end%>
+  		<%end%>
+      <%end%>
+
     </p>
   </div>
 </footer>
+    <a href="#">Back to top</a>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

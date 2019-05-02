@@ -4,18 +4,35 @@ class NotesController < ApplicationController
   # GET /notes
   # GET /notes.json
   def index
-      @notes = Note.all
-      @users = User.all
+    if !session[:user]
+       redirect_to login_path, :alert => "You have to log in to view notes"
+    else
+       @notes = Note.all
+       @users = User.all
+       @friends = Friendship.all 
+    end
   end
 
   # GET /notes/1
   # GET /notes/1.json
   def show
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to view a note "
+       redirect_to login_path, :alert => "You have to log in to view a note "
     else
+       @view = true
        @note = Note.find(params[:id])
-       if @note.user.name != session[:user] and !session[:admin]
+       @friend = Friendship.all
+       if @note.user.name != session[:user] and !session[:admin] 
+	  @view = false
+          for @user in @friend
+	      if @user.user_id == session[:id]
+	      if @note.user.id == @user.friend_id and @note.shared
+		 @view = true
+	      end
+	      end
+	  end
+       end
+       if !@view
           redirect_to notes_path, :alert => "You cannot view another user’s note!"
        end
     end
@@ -24,7 +41,7 @@ class NotesController < ApplicationController
   # GET /notes/new
   def new
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to create a note "
+       redirect_to login_path, :alert => "You have to log in to create a note "
     else
        @note = Note.new
     end
@@ -33,10 +50,22 @@ class NotesController < ApplicationController
   # GET /notes/1/edit
   def edit
     if !session[:user]
-       redirect_to root_path, :alert => "You have to log in to edit a note "
+       redirect_to login_path, :alert => "You have to log in to edit a note "
     else
-       @note = Note.find(params[:id]) 
+       @view = true
+       @note = Note.find(params[:id])
+       @friend = Friendship.all
        if @note.user.name != session[:user] and !session[:admin]
+          @view = false
+          for @user in @friend
+	      if @user.user_id == session[:id]
+	      if @note.user.id == @user.friend_id and @note.shared
+		 @view = true
+	      end
+	      end
+	  end
+       end
+       if !@view
           redirect_to notes_path, :alert => "You cannot edit another user’s note!"
        end
     end
@@ -46,7 +75,7 @@ class NotesController < ApplicationController
   # POST /notes.json
   def create
       if !session[:user]
-         redirect_to root_path, :alert => "You have to log in to create a note "
+         redirect_to login_path, :alert => "You have to log in to create a note "
       else
          @note = Note.new(note_params)
          @note.user = User.find_by name: session[:user]
@@ -66,7 +95,7 @@ class NotesController < ApplicationController
   # PATCH/PUT /notes/1.json
   def update
       if !session[:user]
-         redirect_to root_path, :alert => "You have to log in to edit a note "
+         redirect_to login_path, :alert => "You have to log in to edit a note "
       else
          respond_to do |format|
          if @note.update(note_params)
@@ -84,9 +113,9 @@ class NotesController < ApplicationController
   # DELETE /notes/1.json
   def destroy
       if !session[:user]
-         redirect_to root_path, :alert => "You have to log in to delete a note "
+         redirect_to login_path, :alert => "You have to log in to delete a note "
       else
-         if @note.user.name != session[:user]
+         if @note.user.name != session[:user] and !session[:admin]
             redirect_to notes_path, :alert => "You cannot delete another user’s note!"
          else
             @note.destroy
@@ -106,6 +135,6 @@ class NotesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def note_params
-      params.require(:note).permit(:title, :content, :cover, :user_id )
+      params.require(:note).permit(:title, :content, :cover, :shared, :user_id )
     end
 end
