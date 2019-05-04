@@ -64,7 +64,14 @@ class FriendRequestsController < ApplicationController
 
   private
     def set_friend_request
-      @friend_request = FriendRequest.find(params[:id])
+      begin
+        @friend_request = FriendRequest.find(params[:id])
+      rescue
+        respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Friend request not found' }
+        format.json { render json: @friend_request.errors, status: :unprocessable_entity }
+        end
+      end
     end
 
     def friend_params

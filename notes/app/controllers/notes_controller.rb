@@ -130,7 +130,14 @@ class NotesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_note
-      @note = Note.find(params[:id])
+      begin
+        @note = Note.find(params[:id])
+      rescue
+        respond_to do |format|
+        format.html { redirect_to root_path, notice: 'Note not found' }
+        format.json { render json: @note.errors, status: :unprocessable_entity }
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

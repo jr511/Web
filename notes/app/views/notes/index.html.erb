@@ -48,6 +48,7 @@
 		<a class="text-white"<%= link_to "Profile", "users/" + user.id.to_s %></a>
 		<a class="text-white"<%= link_to "Edit profile", "users/" + user.id.to_s + "/edit" %></a>
 		<a class="text-white" <%= link_to "Friends", "friends/index" %></a>
+		<a class="text-white" <%= link_to "Friend Requests", "friend_requests" %></a>
 
 		<% if user.admin %>
 			<a class="text-white"<%= link_to "Admin users", "users/" %></a>

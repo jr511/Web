@@ -6,10 +6,8 @@ class UsersController < ApplicationController
   def index
     if !session[:user]
        redirect_to login_path, :alert => "You have to log in to view users"
-    end
-    if session[:user]
+    else
       @users = User.all
-      # redirect_to notes_path
     end
   end
 
@@ -53,13 +51,12 @@ class UsersController < ApplicationController
        redirect_to signup_path, :alert => "Passwords don't match!"
     else
        @user = User.new(user_params)
-       begin 
-	  @user.save
+       if @user.save
           session[:id] = @user.id
           session[:user] = @user.name
 	  session[:admin] = @user.admin
           redirect_to root_url + 'notes', :notice => "Signed up!"
-       rescue
+       else
           redirect_to signup_path, :alert => "User name already in use"
        end
     end
@@ -76,25 +73,30 @@ class UsersController < ApplicationController
           redirect_to notes_path, :alert => "You cannot edit another user!"
        else
 	  respond_to do |format|
-	  if check_params[:password] != @user.password
-             if check_params[:password] != check_params[:confirm_password]
-        	format.html { redirect_to @user, notice: "Passwords don't match" }
-	        format.json { render json: @user.errors, status: :unprocessable_entity}
-	     end
-	  end 
-	  begin
+          if check_params[:password] != check_params[:confirm_password]
+	     @update = false
+             format.html { redirect_to @user, notice: "Passwords don't match" }
+	     format.json { render json: @user.errors, status: :unprocessable_entity}
+	  else
   	     if @user.name == session[:user]
-                @user.update(user_params)        
-	        session[:user] = @user.name
-                session[:admin] = @user.admin
+                if @user.update(user_params)        
+	           session[:user] = @user.name
+                   session[:admin] = @user.admin
+	           format.html { redirect_to @user, notice: 'User was successfully updated.' }
+             	   format.json { render :show, status: :ok, location: @user }
+		else
+		   format.html { redirect_to @user, :alert => "User name already in use" }
+                   format.json { render json: @user.errors, status: :unprocessable_entity }
+		end
 	     else
-                @user.update(user_params)        
-	     end
-             format.html { redirect_to @user, notice: 'User was successfully updated.' }
-             format.json { render :show, status: :ok, location: @user }
-          rescue
-             format.html { redirect_to @user, :alert => "User name already in use" }
-             format.json { render json: @user.errors, status: :unprocessable_entity }
+                if @user.update(user_params)        
+                   format.html { redirect_to @user, notice: 'User was successfully updated.' }
+                   format.json { render :show, status: :ok, location: @user }
+		else
+                   format.html { redirect_to @user, :alert => "User name already in use" }
+                   format.json { render json: @user.errors, status: :unprocessable_entity }
+		end
+	     end             
           end
 	  end
        end
@@ -128,7 +130,14 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.find(params[:id])
+      begin
+        @user = User.find(params[:id])
+      rescue
+        respond_to do |format|
+        format.html { redirect_to root_path, notice: 'User not found' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

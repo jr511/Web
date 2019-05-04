@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 2019_04_23_070835) do
 
   create_table "friend_requests", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "friend_id"
+    t.integer "user_id", null: false
+    t.integer "friend_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["friend_id"], name: "index_friend_requests_on_friend_id"
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 2019_04_23_070835) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "friend_id"
+    t.integer "user_id", null: false
+    t.integer "friend_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["friend_id"], name: "index_friendships_on_friend_id"
@@ -31,10 +31,11 @@ ActiveRecord::Schema.define(version: 2019_04_23_070835) do
   end
 
   create_table "notes", force: :cascade do |t|
-    t.string "title"
+    t.string "title", null: false
     t.string "content"
     t.string "image"
-    t.integer "user_id"
+    t.integer "user_id", null: false
+    t.boolean "shared", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "cover_file_name"
@@ -47,9 +48,9 @@ ActiveRecord::Schema.define(version: 2019_04_23_070835) do
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password", null: false
+    t.boolean "admin", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "admin"
   end
 
 end
