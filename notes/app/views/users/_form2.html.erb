@@ -18,12 +18,12 @@
 
   <div class="field">
     <%= form.label :new_password %>
-    <%= form.password_field :password %>
+    <%= form.text_field :password %>
   </div>
 
   <div class="field">
     <%= form.label :repeat_new_password %>
-    <%= form.password_field :confirm_password %>
+    <%= form.text_field :confirm_password %>
   </div>
   <% if session[:admin] %>
   <div class="field">
