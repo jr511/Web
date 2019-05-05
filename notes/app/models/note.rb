@@ -1,4 +1,9 @@
 class Note < ApplicationRecord
+  validates :title, presence: true
+  validates :user, presence: true
+
+  has_many :collection_notes, dependent: :destroy
+
   belongs_to :user
   
   has_attached_file :cover

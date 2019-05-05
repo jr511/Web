@@ -7,7 +7,11 @@ class UsersController < ApplicationController
     if !session[:user]
        redirect_to login_path, :alert => "You have to log in to view users"
     else
-      @users = User.all
+      if !session[:admin]
+         redirect_to root_path
+      else
+         @users = User.all
+      end
     end
   end
 
@@ -75,7 +79,7 @@ class UsersController < ApplicationController
 	  respond_to do |format|
           if check_params[:password] != check_params[:confirm_password]
 	     @update = false
-             format.html { redirect_to @user, notice: "Passwords don't match" }
+             format.html { redirect_to edit_user_path(@user), notice: "Passwords don't match" }
 	     format.json { render json: @user.errors, status: :unprocessable_entity}
 	  else
   	     if @user.name == session[:user]
@@ -85,7 +89,7 @@ class UsersController < ApplicationController
 	           format.html { redirect_to @user, notice: 'User was successfully updated.' }
              	   format.json { render :show, status: :ok, location: @user }
 		else
-		   format.html { redirect_to @user, :alert => "User name already in use" }
+		   format.html { render action: 'edit' }
                    format.json { render json: @user.errors, status: :unprocessable_entity }
 		end
 	     else
@@ -93,7 +97,7 @@ class UsersController < ApplicationController
                    format.html { redirect_to @user, notice: 'User was successfully updated.' }
                    format.json { render :show, status: :ok, location: @user }
 		else
-                   format.html { redirect_to @user, :alert => "User name already in use" }
+                   format.html { render action: 'edit' }
                    format.json { render json: @user.errors, status: :unprocessable_entity }
 		end
 	     end             

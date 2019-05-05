@@ -47,7 +47,7 @@
         <% if user.name == session[:user] %>
 		<a class="text-white"<%= link_to "Profile", "users/" + user.id.to_s %></a>
 		<a class="text-white"<%= link_to "Edit profile", "users/" + user.id.to_s + "/edit" %></a>
-		<a class="text-white" <%= link_to "Collections", "collections" %></a>
+		<a class="text-white" <%= link_to "Notes", "notes" %></a>
 		<a class="text-white" <%= link_to "Friends", "friends/index" %></a>
 		<a class="text-white" <%= link_to "Friend Requests", "friend_requests" %></a>
 
@@ -69,7 +69,7 @@
       <a href="#" class="navbar-brand d-flex align-items-center">
         <strong>noteApp</strong>
       </a>
-      <a href="/notes/new" class="navbar-brand d-flex align-items-center">
+      <a href="/collections/new" class="navbar-brand d-flex align-items-center">
 
 
         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 60 60" focusable="false"><path d="M 45.5,34.051 V 7 c 0,-0.553 -0.448,-1 -1,-1 h -8 V 4 c 0,-0.553 -0.448,-1 -1,-1 h -6 V 1 c 0,-0.553 -0.448,-1 -1,-1 h -9 c -0.552,0 -1,0.447 -1,1 v 2 h -6 c -0.552,0 -1,0.447 -1,1 v 2 h -8 c -0.552,0 -1,0.447 -1,1 v 50 c 0,0.553 0.448,1 1,1 h 34.104 c 2.002,1.26 4.362,2 6.896,2 7.168,0 13,-5.832 13,-13 0,-6.831 -5.299,-12.436 -12,-12.949 z M 20.5,2 h 7 v 2 2 h -7 V 4 Z m -7,3 h 5 v 2 c 0,0.553 0.448,1 1,1 h 9 c 0.552,0 1,-0.447 1,-1 V 5 h 5 v 2 2 h -21 V 7 Z m -9,51 V 8 h 7 v 2 c 0,0.553 0.448,1 1,1 h 23 c 0.552,0 1,-0.447 1,-1 V 8 h 7 v 26.038 c -0.057,0.004 -0.112,0.016 -0.169,0.021 -0.195,0.018 -0.387,0.046 -0.579,0.073 -0.229,0.031 -0.459,0.062 -0.684,0.104 -0.193,0.037 -0.381,0.083 -0.571,0.128 -0.219,0.052 -0.438,0.105 -0.652,0.168 -0.187,0.055 -0.37,0.118 -0.553,0.181 -0.21,0.072 -0.418,0.146 -0.623,0.229 -0.179,0.072 -0.355,0.15 -0.531,0.23 -0.2,0.091 -0.397,0.185 -0.591,0.285 -0.171,0.088 -0.339,0.181 -0.505,0.277 -0.188,0.108 -0.373,0.22 -0.555,0.338 -0.162,0.104 -0.321,0.211 -0.477,0.322 -0.177,0.125 -0.349,0.255 -0.519,0.389 -0.15,0.118 -0.298,0.237 -0.442,0.361 -0.165,0.142 -0.325,0.289 -0.482,0.439 -0.137,0.13 -0.273,0.261 -0.405,0.397 -0.152,0.157 -0.297,0.32 -0.441,0.485 -0.124,0.142 -0.248,0.283 -0.365,0.43 -0.138,0.172 -0.267,0.35 -0.396,0.529 -0.109,0.152 -0.22,0.302 -0.323,0.459 -0.123,0.187 -0.235,0.38 -0.349,0.573 -0.093,0.16 -0.189,0.317 -0.276,0.48 -0.107,0.203 -0.202,0.412 -0.299,0.62 -0.076,0.165 -0.157,0.327 -0.227,0.496 -0.09,0.219 -0.167,0.444 -0.245,0.668 -0.059,0.167 -0.123,0.332 -0.175,0.502 -0.073,0.24 -0.129,0.486 -0.188,0.731 -0.039,0.163 -0.086,0.322 -0.12,0.487 -0.055,0.275 -0.091,0.557 -0.128,0.838 -0.019,0.142 -0.047,0.28 -0.062,0.423 C 31.523,46.13 31.5,46.562 31.5,47 c 0,0.435 0.023,0.867 0.066,1.294 0.016,0.162 0.048,0.318 0.07,0.479 0.036,0.263 0.068,0.526 0.12,0.785 0.035,0.175 0.085,0.345 0.127,0.518 0.058,0.239 0.112,0.479 0.184,0.714 0.049,0.159 0.11,0.313 0.165,0.47 0.084,0.243 0.167,0.487 0.266,0.724 0.055,0.133 0.12,0.26 0.18,0.39 0.115,0.254 0.232,0.507 0.363,0.753 0.058,0.107 0.123,0.21 0.184,0.315 0.148,0.259 0.298,0.515 0.464,0.763 0.061,0.091 0.128,0.177 0.191,0.267 0.176,0.25 0.356,0.498 0.551,0.736 0.072,0.088 0.15,0.17 0.224,0.256 0.155,0.18 0.303,0.364 0.468,0.536 H 4.5 Z m 40,2 c -2.258,0 -4.359,-0.686 -6.107,-1.857 -0.341,-0.228 -0.663,-0.476 -0.972,-0.736 -0.108,-0.091 -0.21,-0.19 -0.314,-0.286 -0.197,-0.179 -0.388,-0.363 -0.57,-0.554 -0.117,-0.123 -0.23,-0.248 -0.341,-0.375 -0.164,-0.188 -0.318,-0.384 -0.468,-0.583 -0.096,-0.127 -0.195,-0.251 -0.286,-0.382 -0.221,-0.321 -0.429,-0.651 -0.615,-0.993 -0.043,-0.08 -0.077,-0.165 -0.118,-0.245 -0.146,-0.286 -0.282,-0.576 -0.403,-0.874 -0.052,-0.13 -0.097,-0.263 -0.145,-0.396 -0.094,-0.262 -0.18,-0.527 -0.255,-0.796 C 33.868,49.784 33.831,49.646 33.798,49.505 33.731,49.22 33.679,48.931 33.635,48.64 33.616,48.515 33.592,48.392 33.578,48.265 33.531,47.848 33.5,47.426 33.5,47 c 0,-6.065 4.935,-11 11,-11 6.065,0 11,4.935 11,11 0,6.065 -4.935,11 -11,11 z"
@@ -121,7 +121,7 @@
    id="path20"
    style="fill:#fffffb;fill-opacity:1"
    inkscape:connector-curvature="0" /></svg>
-        <strong>New note</strong>
+        <strong>New collection</strong>
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -139,17 +139,16 @@
   </section>
 
   <div class="album py-5 bg-light">
-  <h1 class="text-dark"><strong> Notes </strong></h1>
+  <h1 class="text-dark"><strong> Collections </strong></h1>
     <div class="form-signin">
 
       <div class="row">
-        <% @notes.each do |note| %>
-        <% if note.user.name == session[:user] %>
+        <% @collections.each do |collection| %>
+        <% if collection.user.name == session[:user] %>
         <div class="col-md-4">
           <p class="card-text">
-
           <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= note.content %></text></svg>
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= collection.title %></text></svg>
             <div class="card-body">
               
       <tr>
@@ -157,41 +156,18 @@
       </tr>
     </p>
               <div class="d-flex justify-content-between align-items-center">
-              	<p class="float-right"><%= note.title %></p>
                 <div class="btn-group">
-                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
-                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
-                  <a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></a>
-
-		  <div>
-                  <svg id="img<%= note.id %>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="30" height="30" viewBox="0 0 673.221 673.222" style="enable-background:new 0 0 673.221 673.222;"
-	 xml:space="preserve">
-<g>
-        
-<path d="M470.486,136.597c13.158-13.77-13.158-41.279-26.347-27.509L138.69,428.215c0,0-68.452,71.543-5.263,137.547
-		c63.188,66.035,131.672-5.508,131.672-5.508l321.269-335.621c0,0,84.272-88.036-5.263-181.581
-		c-89.536-93.544-173.809-5.508-173.809-5.508L86.028,373.196c0,0-121.115,126.562-5.264,247.615s236.997-5.508,236.997-5.508
-		l321.27-335.652c13.158-13.739-13.158-41.279-26.347-27.509L291.446,587.764c0,0-94.799,99.052-184.335,5.508
-		c-89.535-93.544,5.264-192.565,5.264-192.565L433.613,65.054c0,0,57.926-60.527,121.146,5.508
-		c63.188,66.035,5.263,126.562,5.263,126.562L238.783,532.745c0,0-42.136,44.033-79.009,5.508s5.263-82.528,5.263-82.528
-		L470.486,136.597z"/>
-</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g><g><g></g><g></g><g></g>
-                  </svg>
-                  </div>
+                  <a type="button" href="<%= collections_url %>/<%= collection.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a type="button" href="<%= collections_url %>/<%= collection.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
+                  <a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Destroy', collection, method: :delete, data: { confirm: 'Are you sure?' } %></a>
                 </div>
-		<a type="button" href="<%= notes_path %>/<%= note.id %>/add" class="btn btn-sm btn-outline-secondary" >Add to Collection</a>
+		<a type="button" href="<%= collections_url %>/<%= collection.id %>/notes" class="btn btn-sm btn-outline-secondary" >Notes</a>
               </div>
             </div>
           </div>
         </div>
 
-	<script type="text/javascript">
-	if("<%= note.cover_file_name %>" == ""){
-		var currentImg = document.getElementById("img<%= note.id %>");
-		currentImg.style.visibility = 'hidden';
-	}
-	</script>
+
       <% end %>
       <% end %>
       </div>
@@ -201,7 +177,7 @@
 
 <footer class="text-muted">
   <div class="album py-5 bg-light">
-  <h1 class="text-dark"><strong> Friends Notes </strong></h1>
+  <h1 class="text-dark"><strong> Friends Collections </strong></h1>
     <div class="form-signin">
       <div class="row">
       <% @friends.each do |friend| %>
@@ -210,15 +186,14 @@
 	 <% @users.each do |user| %>
          <% if user.id == friend.friend_id %>
 
-        	<% @notes.each do |note| %>
-	        <% if note.user.name == user.name %>
-		<% if note.shared %>
+        	<% @collections.each do |collection| %>
+	        <% if collection.user.name == user.name %>
+		<% if collection.shared %>
 
         <div class="col-md-4">
           <p class="card-text">
-
           <div class="card mb-4 shadow-sm">
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= note.content %></text></svg>
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= collection.title %></text></svg>
             <div class="card-body">
               
       <tr>
@@ -226,40 +201,16 @@
       </tr>
     </p>
               <div class="d-flex justify-content-between align-items-center">
-              	<p class="float-right"><%= note.title %></p>
                 <div class="btn-group">
-                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
-                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
-
-		  <div>
-                  <svg id="img<%= note.id %>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="30" height="30" viewBox="0 0 673.221 673.222" style="enable-background:new 0 0 673.221 673.222;"
-	 xml:space="preserve">
-<g>
-        
-<path d="M470.486,136.597c13.158-13.77-13.158-41.279-26.347-27.509L138.69,428.215c0,0-68.452,71.543-5.263,137.547
-		c63.188,66.035,131.672-5.508,131.672-5.508l321.269-335.621c0,0,84.272-88.036-5.263-181.581
-		c-89.536-93.544-173.809-5.508-173.809-5.508L86.028,373.196c0,0-121.115,126.562-5.264,247.615s236.997-5.508,236.997-5.508
-		l321.27-335.652c13.158-13.739-13.158-41.279-26.347-27.509L291.446,587.764c0,0-94.799,99.052-184.335,5.508
-		c-89.535-93.544,5.264-192.565,5.264-192.565L433.613,65.054c0,0,57.926-60.527,121.146,5.508
-		c63.188,66.035,5.263,126.562,5.263,126.562L238.783,532.745c0,0-42.136,44.033-79.009,5.508s5.263-82.528,5.263-82.528
-		L470.486,136.597z"/>
-</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g><g><g></g><g></g><g></g>
-                  </svg>
-                  </div>
+                  <a type="button" href="<%= collections_url %>/<%= collection.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a type="button" href="<%= collections_url %>/<%= collection.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
                 </div>
-		<a type="button" href="<%= notes_path %>/<%= note.id %>/add" class="btn btn-sm btn-outline-secondary" >Add to Collection</a>
+		<a type="button" href="<%= collections_url %>/<%= collection.id %>/notes" class="btn btn-sm btn-outline-secondary" >Notes</a>
               </div>
+
             </div>
           </div>
         </div>
-
-	<script type="text/javascript">
-	if("<%= note.cover_file_name %>" == ""){
-		var currentImg = document.getElementById("img<%= note.id %>");
-		currentImg.style.visibility = 'hidden';
-	}
-	</script>
       		<% end %>
 		<% end %>
 		<% end %>
@@ -282,33 +233,30 @@
   		<% if user.name == session[:user] %>
   			<% if user.admin %>
   				<p> Hello admin! </p>
-  				<h1 class="text-dark"><strong> Notes administration panel </strong></h1>
+  				<h1 class="text-dark"><strong> Collections administration panel </strong></h1>
   				<table class="table text-center">
   					<thead>
   						<tr>
-  							<th> Note ID </th>
+  							<th> Collection ID </th>
   							<th> Title </th>
-  							<th> Content </th>
   							<th> Owner </th>
   							<th> Owner ID </th>
   							<th colspan="3"></th>
   						</tr>
   					</thead>
   					<tbody>
-  						<% @notes.each do |note| %>
-				  		<% if note.user.name != session[:user] %>
+				        <% @collections.each do |collection| %>
+					        <% if collection.user.name != session[:user] %>  
   							<tr>
-  								<td><%=note.id%></td>
-  								<td><%=note.title%></td>
-  								<td><%=note.content%></td>
-  								<td><%=note.user.name%></td>
-  								<td><%=note.user.id%></td>
-  								<td><%= link_to "Show", note %></td>
-								<td><%= link_to "Edit", edit_note_path(note) %></td>
-								<td><%= link_to "Destroy", note, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
+  								<td><%=collection.id%></td>
+  								<td><%=collection.title%></td>
+  								<td><%=collection.user.name%></td>
+  								<td><%=collection.user.id%></td>
+  								<td><%= link_to "Show", collection %></td>
+								<td><%= link_to "Edit", edit_collection_path(collection) %></td>
+								<td><%= link_to "Destroy", collection, method: :delete, data: { confirm: 'Are you sure?' } %></td>
 								<td>
-									<a type="button" href="<%= notes_path %>/<%= note.id %>/add" class="btn btn-sm btn-outline-secondary" >Add to Collection</a>
+									<a type="button" href="<%= collections_url %>/<%= collection.id %>/notes" class="btn btn-sm btn-outline-secondary" >Notes</a>
 								</td>
   							</tr>
   						<%end%>

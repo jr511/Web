@@ -13,6 +13,17 @@ class NotesController < ApplicationController
     end
   end
 
+  def add
+    if !session[:user]
+       redirect_to login_path, :alert => "You have to log in to add notes to a collection"
+    else
+       @friends = Friendship.all 
+       @users = User.all
+       @collections = Collection.all
+       @note = Note.find(params[:id])
+    end
+  end
+
   # GET /notes/1
   # GET /notes/1.json
   def show
@@ -78,7 +89,9 @@ class NotesController < ApplicationController
          redirect_to login_path, :alert => "You have to log in to create a note "
       else
          @note = Note.new(note_params)
-         @note.user = User.find_by name: session[:user]
+         if !session[:admin]
+            @note.user = User.find_by name: session[:user]
+         end
          respond_to do |format|
          if @note.save
             format.html { redirect_to notes_url, notice: 'Note was successfully created.' }
@@ -120,7 +133,7 @@ class NotesController < ApplicationController
          else
             @note.destroy
             respond_to do |format|
-            format.html { redirect_to notes_url }
+            format.html { redirect_to notes_url, notice: 'Note was successfully destroyed.' }
             format.json { head :no_content }
             end
          end

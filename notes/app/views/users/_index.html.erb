@@ -36,8 +36,7 @@
   <body class="text-center">
 	<% @users.each do |user| %>
         <% if user.name == session[:user] %>
-			<% if user.admin == true %>
-				<p> Hello admin! </p>
+	<p> Hello admin! </p>
 <table>
   <thead>
     <h1>Manage Users</h1>
@@ -62,35 +61,7 @@
     <% end %>
   </tbody>
 </table>
-			<% else %>
-				<div class="form-signin">
-				  <%= form_tag("/login", method: "post") do %>
-				  <img class="mb-4" src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-				  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-				  <label for="inputEmail" class="sr-only">Username</label>
-				  <input type="text" id="username" class="form-control" placeholder="Username" required autofocus <%= text_field_tag :name, params[:name] %>
-				  <label for="inputPassword" class="sr-only">Password</label>
-				  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required <%= password_field_tag :password, params[:password] %>
-				  <div class="checkbox mb-3">
-				  <label>
-					 <input type="checkbox" value="remember-me"> Remember me
-				  </label>
-				  </div>
-				 <div class="container">
-				 <div class="row">
-				 <div class="col-sm">
-					<a href="/signup" class="btn btn-secondary btn-block" role="button" style="color:white">Sign up</a>
-				 </div>
-				 <div class="col-sm">
-					<button type="submit" class="btn btn-primary btn-block"onclick=<%= submit_tag "Sign in"%>Sign in</button>
-				 </div>
-				</div>
-			  </div>
-			  <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
-		<% end %>
-		</div>
-		<%end%>
-	<% end %> <!-- End users -->
-  <% end %> <!-- End form -->
+	<% end %> 
+        <% end %> 
 </body>
 </html>

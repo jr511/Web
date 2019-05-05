@@ -27,7 +27,7 @@ class FriendRequestsController < ApplicationController
     if !session[:user]
        redirect_to login_path, :alert => "You have to log in to send a friend request"
     else
-       @friend_request = FrirnedRequest.new
+       @friend_request = FriendRequest.new
     end
   end
 

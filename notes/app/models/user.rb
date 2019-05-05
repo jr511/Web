@@ -1,7 +1,9 @@
 class User < ApplicationRecord
-	validates :name, uniqueness: true
+	validates :name, presence: true, uniqueness: true
+	validates :password, presence: true
 
-	has_many :notes
+	has_many :notes, dependent: :destroy
+        has_many :collections, dependent: :destroy
 	has_many :friend_requests, dependent: :destroy
   	has_many :pending_friends, through: :friend_requests, source: :friend
 

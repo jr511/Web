@@ -1,0 +1,74 @@
+<h1>Showing Collection's Notes</h1>
+  <div class="album py-5 bg-light">
+  <h1 class="text-dark"><strong> Notes </strong></h1>
+    <div class="form-signin">
+
+      <div class="row">
+        <% @collection_notes.each do |collection_note| %>
+        <% @notes.each do |note| %>
+        <% if note.id == collection_note.note_id %>
+        <% if collection_note.collection_id == @collection.id %>
+        <div class="col-md-4">
+          <p class="card-text">
+
+          <div class="card mb-4 shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em"><%= note.content %></text></svg>
+            <div class="card-body">
+              
+      <tr>
+        <td></td>
+      </tr>
+    </p>
+              <div class="d-flex justify-content-between align-items-center">
+              	<p class="float-right"><%= note.title %></p>
+                <div class="btn-group">
+                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/" class="btn btn-sm btn-outline-secondary">View</a>
+                  <a type="button" href="<%= root_url %>notes/<%= note.id %>/edit" class="btn btn-sm btn-outline-secondary" >Edit</a>
+                  <% if note.user.name == session[:user] %>
+                     <a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Destroy', note, method: :delete, data: { confirm: 'Are you sure?' } %></a>
+                  <% end %>
+		  <div>
+                  <svg id="img<%= note.id %>" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="30" height="30" viewBox="0 0 673.221 673.222" style="enable-background:new 0 0 673.221 673.222;"
+	 xml:space="preserve">
+<g>
+        
+<path d="M470.486,136.597c13.158-13.77-13.158-41.279-26.347-27.509L138.69,428.215c0,0-68.452,71.543-5.263,137.547
+		c63.188,66.035,131.672-5.508,131.672-5.508l321.269-335.621c0,0,84.272-88.036-5.263-181.581
+		c-89.536-93.544-173.809-5.508-173.809-5.508L86.028,373.196c0,0-121.115,126.562-5.264,247.615s236.997-5.508,236.997-5.508
+		l321.27-335.652c13.158-13.739-13.158-41.279-26.347-27.509L291.446,587.764c0,0-94.799,99.052-184.335,5.508
+		c-89.535-93.544,5.264-192.565,5.264-192.565L433.613,65.054c0,0,57.926-60.527,121.146,5.508
+		c63.188,66.035,5.263,126.562,5.263,126.562L238.783,532.745c0,0-42.136,44.033-79.009,5.508s5.263-82.528,5.263-82.528
+		L470.486,136.597z"/>
+</g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g><g><g></g><g></g><g></g>
+                  </svg>
+                  </div>
+                </div>
+
+		<a type="button" class="btn btn-sm btn-outline-secondary" <%= link_to 'Remove from collection', collection_notes_path(:collection=>@collection.id, :note=>note.id), method: :delete, data: { confirm: 'Are you sure?' } %></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+	<script type="text/javascript">
+	if("<%= note.cover_file_name %>" == ""){
+		var currentImg = document.getElementById("img<%= note.id %>");
+		currentImg.style.visibility = 'hidden';
+	}
+	</script>
+      <% end %>
+      <% end %>
+      <% end %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+
+<%= link_to 'Edit', edit_collection_path(@collection) %> |
+
+<% if @collection.user.name == session[:user] %>
+   <%= link_to 'Destroy', @collection, method: :delete, data: { confirm: 'Are you sure?' }  %> |
+<% end %>
+
+<%= link_to 'Back', collections_path %>

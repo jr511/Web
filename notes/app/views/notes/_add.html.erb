@@ -1,0 +1,50 @@
+<h1>Collections:</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% if session[:admin] %>
+            <% @collections.each do |collection| %>
+		<tr>
+        		<td><%= collection.title %></td>
+		        <td><%= link_to 'Add', collection_notes_path(:collection=>collection.id, :note=>@note.id), method: :post %></td>
+	        </tr>
+	    <% end %>
+      <% else %>
+
+      <% @friends.each do |friend| %>
+      <% if session[:id] == friend.user_id %>
+
+	 <% @users.each do |user| %>
+         <% if user.id == friend.friend_id %>
+
+            <% @collections.each do |collection| %>
+            <% if collection.user.name == user.name %>
+            <% if collection.shared %>
+      		<tr>
+        		<td><%= collection.title %></td>
+		        <td><%= link_to 'Add', collection_notes_path(:collection=>collection.id, :note=>@note.id), method: :post %></td>
+	        </tr>
+            <% end %>
+            <% end %>
+            <% end %>
+         <% end %>
+         <% end %>
+      <% end %>
+      <% end %>
+
+      <% @collections.each do |collection| %>
+      <% if collection.user.name == session[:user] %>
+      <tr>
+        <td><%= collection.title %></td>
+        <td><%= link_to 'Add', collection_notes_path(:collection=>collection.id, :note=>@note.id), method: :post %></td>
+      </tr>
+      <% end %>
+      <% end %>
+      <% end %>
+  </tbody>
+</table>
